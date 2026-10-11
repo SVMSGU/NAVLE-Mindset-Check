@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NAVLE Mindset Check</title>
+<style>
+:root{
+  --ink:#1B2A41; --navy:#1F3864; --muted:#4A5568; --paper:#FBFBF9; --panel:#FFFFFF;
+  --line:#D5DCE8; --soft:#EEF2F8; --sage:#2E6E64; --sage-bg:#E7F2EF;
+  --low:#8FA3BF; --mod:#C9922E; --strong:#A8452F; --focus:#2F6FDE;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#E6EBF3; --navy:#9DB7E6; --muted:#AAB4C3; --paper:#121821; --panel:#1A2230;
+    --line:#2E3A4D; --soft:#222C3D; --sage:#7CC3B5; --sage-bg:#1C302D;
+    --low:#6E819C; --mod:#D9A748; --strong:#D9735C; --focus:#7FA7F0;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#E6EBF3; --navy:#9DB7E6; --muted:#AAB4C3; --paper:#121821; --panel:#1A2230;
+  --line:#2E3A4D; --soft:#222C3D; --sage:#7CC3B5; --sage-bg:#1C302D;
+  --low:#6E819C; --mod:#D9A748; --strong:#D9735C; --focus:#7FA7F0;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 80px)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Cambria,"Cambria Math",Georgia,"Times New Roman",serif;font-size:18px;line-height:1.6}
+main{max-width:46rem;margin:0 auto;padding:2rem 1.25rem 4rem}
+h1{font-size:2.4rem;line-height:1.15;margin:0 0 .4rem;color:var(--navy);font-weight:700}
+.sub{font-size:1.25rem;font-style:italic;color:var(--muted);margin:0 0 1.5rem}
+h2{font-size:1.5rem;color:var(--navy);margin:2.5rem 0 .75rem;line-height:1.25}
+h3{font-size:1.25rem;margin:0;line-height:1.3}
+p{margin:0 0 1rem}
+.intro{border-left:4px solid var(--navy);padding:.25rem 0 .25rem 1rem;margin-bottom:1.5rem}
+.note{font-size:16px;color:var(--muted)}
+
+.progress{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);padding:.75rem 0;border-bottom:1px solid var(--line);margin:0 0 1rem}
+.progress-row{display:flex;justify-content:space-between;font-size:16px;color:var(--muted);margin-bottom:.4rem}
+.track{height:8px;background:var(--soft);border-radius:4px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--navy);transition:width .25s ease}
+
+.scale-key{font-size:16px;color:var(--muted);margin-bottom:1rem}
+.item{padding:1.1rem 0;border-bottom:1px solid var(--line)}
+.item.missing{background:linear-gradient(90deg,rgba(168,69,47,.08),transparent);border-left:3px solid var(--strong);padding-left:.75rem}
+.item legend{padding:0;font-size:18px;margin-bottom:.6rem;display:flex;gap:.6rem}
+.item legend .n{color:var(--muted);min-width:1.6rem;font-variant-numeric:tabular-nums}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+.opts{display:grid;grid-template-columns:repeat(5,1fr);gap:.4rem;margin-left:2.2rem}
+.opts label{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid var(--line);background:var(--panel);border-radius:6px;padding:.45rem .2rem;cursor:pointer;text-align:center;min-height:3.4rem}
+.opts input{position:absolute;opacity:0;pointer-events:none}
+.opts .num{font-size:18px;font-weight:700;line-height:1.1}
+.opts .word{font-size:16px;color:var(--muted);line-height:1.15}
+.opts label:hover{border-color:var(--navy)}
+.opts input:checked + .num, .opts input:checked ~ .word{color:#fff}
+.opts label:has(input:checked){background:var(--navy);border-color:var(--navy)}
+:root[data-theme="dark"] .opts input:checked + .num, :root[data-theme="dark"] .opts input:checked ~ .word{color:#121821}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .opts input:checked + .num, :root:not([data-theme="light"]) .opts input:checked ~ .word{color:#121821}}
+.opts label:has(input:focus-visible){outline:3px solid var(--focus);outline-offset:2px}
+
+button{font-family:inherit;font-size:18px;cursor:pointer;border-radius:6px}
+.primary{background:var(--navy);color:var(--paper);border:0;padding:.85rem 1.6rem;font-weight:700;margin-top:1.5rem}
+.secondary{background:transparent;color:var(--navy);border:1px solid var(--navy);padding:.7rem 1.3rem}
+button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.error{color:var(--strong);font-size:16px;margin-top:.75rem;min-height:1.5rem}
+
+/* Results */
+#results[hidden]{display:none}
+.headline{font-size:1.3rem;line-height:1.45;margin-bottom:1.5rem}
+.profile{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:1.25rem 1.25rem .75rem}
+.bands{display:grid;grid-template-columns:6fr 5fr 5fr;font-size:16px;color:var(--muted);margin-left:9.5rem;margin-right:3.1rem;margin-bottom:.35rem}
+.bands span:nth-child(2){text-align:center}.bands span:nth-child(3){text-align:right}
+.bar-row{display:grid;grid-template-columns:9rem 1fr 2.6rem;align-items:center;gap:.5rem;margin-bottom:.7rem}
+.bar-name{font-weight:700;font-size:17px}
+.bar-track{position:relative;height:1.4rem;border-radius:4px;overflow:hidden;
+  background:linear-gradient(90deg,var(--soft) 0 37.5%,transparent 37.5% 37.6%,var(--soft) 37.6% 68.75%,transparent 68.75% 68.85%,var(--soft) 68.85%)}
+.bar-fill{height:100%;width:0;border-radius:4px;transition:width .6s cubic-bezier(.2,.7,.2,1)}
+.bar-score{font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+.legend{font-size:16px;color:var(--muted);margin-top:.5rem}
+
+details.pattern{border:1px solid var(--line);border-left:6px solid var(--low);border-radius:6px;background:var(--panel);margin-bottom:1rem}
+details.pattern.moderate{border-left-color:var(--mod)}
+details.pattern.strong{border-left-color:var(--strong)}
+details.pattern summary{list-style:none;cursor:pointer;padding:1rem 1.1rem;display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
+details.pattern summary::-webkit-details-marker{display:none}
+details.pattern summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.tag{font-size:16px;font-weight:700;white-space:nowrap}
+.tag.low{color:var(--muted)}.tag.moderate{color:var(--mod)}.tag.strong{color:var(--strong)}
+.body{padding:0 1.1rem 1.1rem}
+.level-msg{font-style:italic;color:var(--muted);margin-bottom:.9rem}
+dl{margin:0;display:grid;grid-template-columns:8.5rem 1fr;gap:.55rem 1rem}
+dt{font-weight:700;color:var(--navy)}
+dd{margin:0}
+.sage{grid-column:1 / -1;background:var(--sage-bg);border-radius:6px;padding:.8rem 1rem;color:var(--ink)}
+.sage strong{color:var(--sage);display:block;font-size:16px}
+.sage q{font-size:1.15rem;quotes:"\201C" "\201D"}
+
+.reflect label{display:block;font-weight:700;margin:1.25rem 0 .4rem}
+textarea{width:100%;min-height:5.5rem;font-family:inherit;font-size:18px;padding:.6rem .75rem;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);resize:vertical}
+textarea:focus-visible{outline:3px solid var(--focus);outline-offset:1px}
+.actions{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.5rem}
+.coach-box{background:var(--panel);border:1px solid var(--line);border-left:6px solid var(--sage);border-radius:8px;padding:1.25rem}
+.coach-row{display:grid;grid-template-columns:1fr 3.6rem;gap:.75rem;align-items:center;margin:.5rem 0 .75rem}
+.coach-track{height:1.4rem;border-radius:4px;background:var(--soft);overflow:hidden}
+.coach-fill{height:100%;width:0;background:var(--sage);border-radius:4px;transition:width .6s cubic-bezier(.2,.7,.2,1)}
+.habits{display:grid;gap:.75rem;margin-top:1rem}
+.habit{background:var(--sage-bg);border-radius:6px;padding:.75rem 1rem}
+.habit strong{display:block;color:var(--sage);font-size:16px}
+.mine{grid-column:1 / -1;border-top:1px dashed var(--line);padding-top:.7rem;margin-top:.2rem}
+.mine strong{color:var(--navy)}
+.about{margin:3rem 0 0;padding-top:1rem;border-top:1px solid var(--line);font-size:16px;color:var(--muted)}
+
+@media (max-width:560px){
+  h1{font-size:2rem}
+  .opts{margin-left:0;gap:.3rem}
+  .opts .word{font-size:16px;word-break:break-word;hyphens:auto}
+  .bar-row{grid-template-columns:7rem 1fr 2.4rem}
+  .bands{margin-left:7.5rem;margin-right:2.9rem}
+  .bands .r{display:none}
+  dl{grid-template-columns:1fr}
+  dt{margin-top:.4rem}
+}
+.print-text{display:none}
+.print-help{margin-top:1rem;background:var(--soft);border-radius:6px;padding:.9rem 1rem;font-size:16px}
+.print-help p{margin:0 0 .5rem}.print-help p:last-child{margin:0}
+@media print{
+  :root{--ink:#1B2A41;--navy:#1F3864;--muted:#4A5568;--paper:#fff;--panel:#fff;--line:#C8D0DC;--soft:#EEF2F8;--sage:#2E6E64;--sage-bg:#E7F2EF;--low:#8FA3BF;--mod:#C9922E;--strong:#A8452F;padding:0}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{font-size:12pt;background:#fff}
+  main{max-width:none;padding:0}
+  #survey,.actions,.reflect .note,.print-help{display:none!important}
+  .bar-fill,.coach-fill{transition:none}
+  details.pattern,.profile,.habit{break-inside:avoid}
+  h1{font-size:22pt}h2{font-size:15pt;margin:1.1rem 0 .5rem}h3{font-size:13pt}
+  p{margin:0 0 .5rem}.headline{margin-bottom:.75rem}
+  details.pattern{margin-bottom:.6rem}details.pattern summary{padding:.5rem .8rem}
+  .body{padding:0 .8rem .6rem}.level-msg{margin-bottom:.4rem}
+  dl{gap:.3rem .8rem;grid-template-columns:8rem 1fr}.sage{padding:.4rem .7rem}
+  .coach-box,.profile{padding:.8rem}.habits{gap:.4rem;margin-top:.5rem}.habit{padding:.4rem .7rem}
+  .reflect label{margin:.7rem 0 .3rem}
+  .reflect{break-inside:avoid}
+  .reflect textarea{display:none}
+  .print-text{display:block;min-height:3.5em;border:1px solid #C8D0DC;border-radius:6px;padding:.5rem .75rem;white-space:pre-wrap;break-inside:avoid}
+  .reflect label{break-after:avoid}
+  h2{break-after:avoid}
+  .about{margin:1.5rem 0 0}
+}
+@media (prefers-reduced-motion:reduce){.fill,.bar-fill,.coach-fill{transition:none}}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>NAVLE Mindset Check</h1>
+    <p class="sub">Your Inner Critic and your Inner Coach</p>
+  </header>
+
+  <section id="survey">
+    <div class="intro">
+      <p>Preparing for high-stakes exams like the NAVLE can often expose the stories we tell ourselves quietly. Some of that inner dialogue can be helpful. Think of this as your <strong>Inner Coach</strong>. Some of it, though, subtly works against you. This is your <strong>Inner Critic</strong>. This Mindset Check tool will help you see which voice is louder during NAVLE preparation, and which helpful habits you already have.</p>
+      <p>There are no right or wrong answers. Your responses stay on your device and are not sent to anyone.</p>
+    </div>
+
+    <div class="progress" aria-live="polite">
+      <div class="progress-row"><span id="progText">0 of 25 answered</span><span>About 6 minutes</span></div>
+      <div class="track"><div class="fill" id="progFill"></div></div>
+    </div>
+
+    <p><strong>Think about your NAVLE preparation to date.</strong> How often is each statement true for you? Go with your first response.</p>
+    <p class="scale-key">0 Never, 1 Rarely, 2 Sometimes, 3 Often, 4 Almost always</p>
+
+    <form id="form" novalidate onsubmit="return false"></form>
+    <button class="primary" id="scoreBtn" type="button">See my results</button>
+    <p class="error" id="err" role="alert"></p>
+  </section>
+
+  <section id="results" hidden tabindex="-1" aria-labelledby="resTitle">
+    <h2 id="resTitle">Your results</h2>
+    <p class="headline" id="headline"></p>
+
+    <h2>Your Inner Critic</h2>
+    <div class="profile" role="img" aria-label="Score profile for five patterns" id="profileBox">
+      <div class="bands" aria-hidden="true"><span>Low<span class="r"> 0 to 5</span></span><span>Moderate<span class="r"> 6 to 10</span></span><span>Strong<span class="r"> 11 to 16</span></span></div>
+      <div id="bars"></div>
+    </div>
+    <p class="legend">Scores range from 0 to 16: Low 0 to 5, Moderate 6 to 10, Strong 11 to 16. Most people have one or two patterns that score higher than the rest. A high score is not a flaw. It is useful information about where your energy is going.</p>
+
+    <h2>Your Inner Coach</h2>
+    <div class="coach-box" id="coachBox"></div>
+
+    <h2>Know your Inner Critic patterns</h2>
+    <p>Patterns are listed from your highest score to your lowest. Each one believes it is helping you. The Inner Coach response is how you answer it.</p>
+    <div id="cards"></div>
+
+    <h2>Reflect and plan</h2>
+    <div class="reflect">
+      <p class="note">Nothing on this page is saved. Use the Print or Save as PDF button below to keep a copy of your results and notes before you leave.</p>
+      <label for="r1">Where did your top Inner Critic pattern show up in the past week?</label>
+      <textarea id="r1"></textarea>
+      <label for="r2">What has it cost you in your preparation?</label>
+      <textarea id="r2"></textarea>
+      <label for="r3">What will you say when your Inner Critic shows up?</label>
+      <textarea id="r3"></textarea>
+      <label for="r4">One specific action you will take in the next 7 days</label>
+      <textarea id="r4"></textarea>
+    </div>
+
+    <div class="actions">
+      <button class="primary" id="printBtn" type="button" style="margin-top:0">Print or Save as PDF</button>
+    </div>
+    <div class="print-help" id="printHelp" role="status" hidden>
+      <p><strong>Saving from a phone or tablet</strong></p>
+      <p id="printHelpLead">This app can't open the print screen. Open this page in Safari or Chrome instead, then tap <strong>Print or Save as PDF</strong> again.</p>
+      <p>On an iPhone or iPad in Safari, you can also tap the <strong>Share</strong> icon, choose <strong>Print</strong>, then tap <strong>Share</strong> again and choose <strong>Save to Files</strong> to keep a PDF.</p>
+      <p>If none of these work, take screenshots of your results.</p>
+    </div>
+  </section>
+
+  <footer><p class="about">This self-check is an original reflection activity adapted from the Positive Intelligence framework (Chamine, 2012) developed by Dr. Renae Azziz, SVM Board Review Strategist. It is not a diagnostic tool. If stress or anxiety is affecting your sleep, health, or daily functioning, please seek additional services and/or connect with a Learning Strategist.</p></footer>
+</main>
+
+<script>
+const CRITIC=[
+["J","When I miss a practice question, I tell myself I'm not cut out for this."],
+["HA","A good practice score feels more like relief than accomplishment."],
+["S","I can't move on from a question until I understand every detail of it."],
+["HV","I picture what will happen if I fail the NAVLE."],
+["A","I put off taking practice exams because I'm afraid of the score."],
+["J","After a study session, I focus more on what I got wrong than on what I got right."],
+["HA","My sense of worth rises and falls with my scores."],
+["S","I rewrite or reorganize my study notes until they look perfect."],
+["HV","Even when I feel prepared, I worry about what I might have missed."],
+["A","I study topics I already know instead of the ones I struggle with."],
+["J","I compare my scores to classmates' and conclude that I'm behind."],
+["HA","I explain away my successes as luck, an easy test, or \u201Cnot good enough.\u201D"],
+["S","If my study plan falls behind schedule, I feel the whole plan is ruined."],
+["HV","I find it hard to relax, even on scheduled rest days."],
+["A","I stay busy with tasks that feel productive but are not my top priority."],
+["J","When I make a mistake, my inner voice is harsher than I would ever be with a friend."],
+["HA","I feel I have to prove that I belong in this program."],
+["S","I spend too much time on low-yield details."],
+["HV","During exams, I worry about running out of time or seeing questions I can't answer."],
+["A","I avoid talking about my NAVLE preparation with faculty or peers."]];
+const COACH=[
+["J","When I miss a question, I treat it as information about what to review next."],
+["HA","I notice and acknowledge my progress, even when I'm not finished."],
+["S","Once I understand the main point of a question, I can move on."],
+["HV","When I start to worry, I bring my attention back to what I can control today."],
+["A","I take practice exams on schedule, even when I expect a low score."]];
+// Order: four Inner Critic items, then one Inner Coach item, repeated five times
+const ITEMS=[];
+for(let b=0;b<5;b++){CRITIC.slice(b*4,b*4+4).forEach(x=>ITEMS.push({t:"critic",k:x[0],text:x[1]}));ITEMS.push({t:"coach",k:COACH[b][0],text:COACH[b][1]});}
+const WORDS=["Never","Rarely","Sometimes","Often","Almost always"];
+const P={
+ J:{name:"Judge",sounds:"\u201CYou should know this by now. Everyone else is ahead of you.\u201D",prep:"Harsh self-talk after missed questions; constant comparison with classmates.",cost:"Raises anxiety, drains energy, and makes it harder to learn from mistakes.",coach:"A missed question shows me exactly what to review next.",try:"After each practice block, write down two things you did well before reviewing what you missed."},
+ HA:{name:"Hyper-Achiever",sounds:"\u201CYou're only as good as your last score.\u201D",prep:"Self-worth tied to performance; progress quickly dismissed.",cost:"No recovery after success, rising burnout, and a persistent fear of being \u201Cfound out.\u201D",coach:"My progress is real, even when it is not finished.",try:"Keep a weekly log of score gains and topics mastered. Read it before each new practice exam."},
+ S:{name:"Stickler",sounds:"\u201CIf it isn't perfect, it isn't done.\u201D",prep:"Over-researching single questions, rewriting notes, abandoning a plan that falls behind.",cost:"Time lost on low-yield detail and less coverage of high-yield content.",coach:"The NAVLE rewards broad, solid knowledge, not perfection on every detail.",try:"Set a time limit for reviewing each question (for example, 3 minutes), then move on."},
+ HV:{name:"Hyper-Vigilant",sounds:"\u201CSomething is going to go wrong.\u201D",prep:"Catastrophizing about failing; constant worry; difficulty resting.",cost:"Chronic stress reduces focus and working memory, especially on test day.",coach:"I am preparing for what I can control.",try:"List your worries, sort them into \u201Ccan control\u201D and \u201Ccan't control,\u201D and act on one item from the first list."},
+ A:{name:"Avoider",sounds:"\u201CYou'll take the practice test when you're ready.\u201D",prep:"Delaying practice exams, studying comfortable topics, filling time with busywork.",cost:"Weak areas stay hidden until it is too late to fix them.",coach:"A low practice score now costs far less than a surprise on test day.",try:"Put your next practice exam on your calendar today and start with your weakest discipline."}};
+const ORDER=["J","HA","S","HV","A"];
+const LEVEL={
+ strong:{label:"Strong",msg:"This pattern likely shapes how you prepare much of the time. Start your reflection here.",color:"var(--strong)"},
+ moderate:{label:"Moderate",msg:"This pattern shows up under certain conditions. Notice when it appears and what triggers it.",color:"var(--mod)"},
+ low:{label:"Low",msg:"This pattern rarely drives your preparation right now. Keep it in mind for higher-pressure weeks.",color:"var(--low)"}};
+const levelOf=s=>s>=11?"strong":s>=6?"moderate":"low";
+const COACH_LEVEL=s=>s>=15?{label:"Strong",msg:"You already have a strong Inner Coach. Use it on purpose when your Inner Critic gets loud."}
+ :s>=8?{label:"Building",msg:"Your Inner Coach shows up some of the time. The habit to build below is a good place to practice."}
+ :{label:"Emerging",msg:"Your Inner Coach is quiet right now. That is common under exam pressure, and it is a skill you can build."};
+
+const form=document.getElementById("form");
+ITEMS.forEach((it,i)=>{
+  const fs=document.createElement("fieldset");fs.className="item";fs.id="q"+i;
+  const opts=WORDS.map((w,v)=>`<label><input type="radio" name="q${i}" value="${v}"><span class="num">${v}</span><span class="word">${w}</span></label>`).join("");
+  fs.innerHTML=`<legend><span class="n">${i+1}.</span><span>${it.text}</span></legend><div class="opts">${opts}</div>`;
+  form.appendChild(fs);
+});
+const N=ITEMS.length;
+const answered=()=>ITEMS.map((_,i)=>form.querySelector(`input[name=q${i}]:checked`));
+function updateProgress(){
+  const n=answered().filter(Boolean).length;
+  document.getElementById("progText").textContent=`${n} of ${N} answered`;
+  document.getElementById("progFill").style.width=(n/N*100)+"%";
+}
+form.addEventListener("change",e=>{
+  const fs=e.target.closest(".item"); if(fs) fs.classList.remove("missing");
+  updateProgress();
+  if(answered().every(Boolean)) document.getElementById("err").textContent="";
+});
+
+function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]))}
+function listNames(a){return a.length===1?a[0]:a.length===2?a.join(" and "):a.slice(0,-1).join(", ")+", and "+a[a.length-1]}
+
+document.getElementById("scoreBtn").addEventListener("click",()=>{
+  const a=answered(); const miss=a.map((x,i)=>x?null:i).filter(x=>x!==null);
+  document.querySelectorAll(".item").forEach(f=>f.classList.remove("missing"));
+  if(miss.length){
+    miss.forEach(i=>document.getElementById("q"+i).classList.add("missing"));
+    document.getElementById("err").textContent=miss.length>4?`Answer the ${miss.length} remaining items to see your results.`:`Answer ${miss.length===1?"item":"items"} ${listNames(miss.map(i=>String(i+1)))} to see your results.`;
+    document.getElementById("q"+miss[0]).scrollIntoView({behavior:"smooth",block:"center"});
+    return;
+  }
+  const scores={J:0,HA:0,S:0,HV:0,A:0}, coach={};
+  a.forEach((x,i)=>{const v=Number(x.value),it=ITEMS[i]; if(it.t==="critic") scores[it.k]+=v; else coach[it.k]=v;});
+  render(scores,coach);
+});
+
+function render(scores,coach){
+  const sorted=[...ORDER].sort((x,y)=>scores[y]-scores[x]||ORDER.indexOf(x)-ORDER.indexOf(y));
+  const top=scores[sorted[0]];
+  const tops=sorted.filter(k=>scores[k]===top).map(k=>P[k].name);
+  const nStrong=sorted.filter(k=>levelOf(scores[k])==="strong").length;
+  const coachTotal=ORDER.reduce((t,k)=>t+coach[k],0), cl=COACH_LEVEL(coachTotal);
+  let h;
+  if(top===0) h="You did not rate any Inner Critic patterns as active right now.";
+  else if(tops.length===5) h=`All five Inner Critic patterns scored the same (${top} of 16, ${LEVEL[levelOf(top)].label}). Read each description below and notice which one feels most familiar.`;
+  else if(nStrong>0) h=`Your strongest Inner Critic ${tops.length>1?"patterns are":"pattern is"} the <strong>${esc(listNames(tops))}</strong>.${nStrong>1?` You have ${nStrong} patterns in the strong range, so pick one to focus on this week.`:""}`;
+  else if(levelOf(top)==="moderate") h=`None of your Inner Critic patterns are in the strong range. Your highest ${tops.length>1?"are":"is"} the <strong>${esc(listNames(tops))}</strong>.`;
+  else h=`All five Inner Critic patterns are in the low range. Your highest ${tops.length>1?"are":"is"} the <strong>${esc(listNames(tops))}</strong>.`;
+  h+=` Your Inner Coach score is <strong>${coachTotal} of 20 (${cl.label})</strong>.`;
+  document.getElementById("headline").innerHTML=h;
+
+  document.getElementById("bars").innerHTML=ORDER.map(k=>{
+    const lv=levelOf(scores[k]);
+    return `<div class="bar-row"><span class="bar-name">${P[k].name}</span><div class="bar-track"><div class="bar-fill" data-w="${scores[k]/16*100}" style="background:${LEVEL[lv].color}"></div></div><span class="bar-score">${scores[k]}</span></div>`;
+  }).join("");
+  document.getElementById("profileBox").setAttribute("aria-label","Inner Critic scores out of 16: "+ORDER.map(k=>`${P[k].name} ${scores[k]}, ${LEVEL[levelOf(scores[k])].label}`).join("; "));
+
+  // Inner Coach: strongest habit = highest rating; habit to build = lowest rating, ties broken toward the top Inner Critic pattern
+  const byHigh=[...ORDER].sort((x,y)=>coach[y]-coach[x]||ORDER.indexOf(x)-ORDER.indexOf(y));
+  const byLow=[...ORDER].sort((x,y)=>coach[x]-coach[y]||scores[y]-scores[x]||ORDER.indexOf(x)-ORDER.indexOf(y));
+  const ct=k=>COACH.find(c=>c[0]===k)[1];
+  const best=byHigh[0], grow=byLow[0];
+  let habits="";
+  if(coach[best]>=2) habits+=`<div class="habit"><strong>A habit you already use</strong>\u201C${esc(ct(best))}\u201D You answered: ${WORDS[coach[best]]}.</div>`;
+  if(coach[grow]<=2) habits+=`<div class="habit"><strong>A habit to build</strong>\u201C${esc(ct(grow))}\u201D You answered: ${WORDS[coach[grow]]}. This habit answers the ${P[grow].name}.</div>`;
+  if(!habits) habits=`<div class="habit"><strong>Keep it up</strong>You rated every Inner Coach habit as something you do often. Notice which one you rely on most under pressure.</div>`;
+  document.getElementById("coachBox").innerHTML=`
+    <p style="margin:0"><strong>Your Inner Coach is the helpful voice that responds to pressure with curiosity, calm, and action.</strong></p>
+    <div class="coach-row" role="img" aria-label="Inner Coach score ${coachTotal} of 20, ${cl.label}"><div class="coach-track"><div class="coach-fill" data-w="${coachTotal/20*100}"></div></div><span class="bar-score">${coachTotal}/20</span></div>
+    <p class="note" style="margin:0 0 .5rem">Emerging 0 to 7, Building 8 to 14, Strong 15 to 20</p>
+    <p style="margin:0"><strong>${cl.label}.</strong> ${cl.msg}</p>
+    <div class="habits">${habits}</div>`;
+
+  document.getElementById("cards").innerHTML=sorted.map(k=>{
+    const p=P[k], lv=levelOf(scores[k]), open=lv!=="low"||(top<6&&scores[k]===top&&top>0);
+    const cv=coach[k];
+    const mineMsg=cv>=3?"You already do this often. Lean on it when this pattern shows up.":cv===2?"You do this some of the time. Practice it on purpose this week.":"This is a habit worth building.";
+    return `<details class="pattern ${lv}"${open?" open":""}>
+      <summary><h3>${p.name}</h3><span class="tag ${lv}">${LEVEL[lv].label}, ${scores[k]} of 16</span></summary>
+      <div class="body">
+        <p class="level-msg">${LEVEL[lv].msg}</p>
+        <dl>
+          <dt>Sounds like</dt><dd>${esc(p.sounds)}</dd>
+          <dt>In NAVLE prep</dt><dd>${esc(p.prep)}</dd>
+          <dt>The cost</dt><dd>${esc(p.cost)}</dd>
+          <div class="sage"><strong>Inner Coach response</strong><q>${esc(p.coach)}</q></div>
+          <dt>Try this</dt><dd>${esc(p.try)}</dd>
+          <div class="mine"><strong>Your Inner Coach habit:</strong> \u201C${esc(ct(k))}\u201D You answered: ${WORDS[cv]}. ${mineMsg}</div>
+        </dl>
+      </div></details>`;
+  }).join("");
+
+  document.getElementById("survey").hidden=true;
+  const res=document.getElementById("results"); res.hidden=false;
+  window.scrollTo(0,0); res.focus({preventScroll:true});
+  requestAnimationFrame(()=>requestAnimationFrame(()=>document.querySelectorAll(".bar-fill,.coach-fill").forEach(b=>b.style.width=b.dataset.w+"%")));
+}
+// Print or Save as PDF: open every profile, show full reflection text, then restore
+let closedBeforePrint=[];
+function preparePrint(){
+  closedBeforePrint=[...document.querySelectorAll("details.pattern:not([open])")];
+  closedBeforePrint.forEach(d=>d.open=true);
+  document.querySelectorAll(".reflect textarea").forEach(t=>{
+    let d=t.nextElementSibling;
+    if(!d||!d.classList.contains("print-text")){d=document.createElement("div");d.className="print-text";t.after(d);}
+    d.textContent=t.value.trim()||" ";
+  });
+  document.querySelectorAll(".bar-fill,.coach-fill").forEach(b=>b.style.width=b.dataset.w+"%");
+}
+function restorePrint(){closedBeforePrint.forEach(d=>d.open=false);closedBeforePrint=[];}
+window.addEventListener("beforeprint",preparePrint);
+window.addEventListener("afterprint",restorePrint);
+// Phones: in-app browsers (Canvas app, email apps, file previews) often cannot open the print screen
+const UA=navigator.userAgent;
+const isIOS=/iPhone|iPad|iPod/.test(UA)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+const inAppView=(isIOS&&(!/Safari\//.test(UA)||/CanvasStudent|Instructure/i.test(UA)))||/; wv\)|CanvasStudent|Instructure/i.test(UA);
+function showPrintHelp(lead){const h=document.getElementById("printHelp");document.getElementById("printHelpLead").hidden=!lead;h.hidden=false;h.scrollIntoView({behavior:"smooth",block:"center"});}
+document.getElementById("printBtn").addEventListener("click",()=>{
+  if(inAppView||typeof window.print!=="function"){showPrintHelp(true);return;}
+  preparePrint();
+  try{window.print();}catch(e){showPrintHelp(true);return;}
+  if(isIOS||/Android/i.test(UA)) setTimeout(()=>showPrintHelp(false),1500);
+});
+</script>
+</body>
+</html>
